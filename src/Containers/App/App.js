@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from '../Header/Header';
 import AddTodo from '../AddTodo/AddToDo';
 import ChangeToDo from '../ChangeToDo/ChangeToDo';
-import Table from '../../Components/Table/Table';
+import Table from '../Table/Table';
 
 class App extends Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class App extends Component {
     let i = 1;
     while(i <= counter) {
       list.push(i);
+      i +=1;
     }
 
     this.setState({pagesSpan: list});
@@ -75,11 +76,11 @@ class App extends Component {
 
     return (
       <div>
-          <Header
-            onSignin={this.onSignIn.bind(this)}
-            onSignout={this.onSignout.bind(this)}
-            currentAdmin={this.state.currentAdmin}
-          />
+      <Header
+        onSignin={this.onSignIn.bind(this)}
+        onSignout={this.onSignout.bind(this)}
+        currentAdmin={this.state.currentAdmin}
+      />
           <Table pagesSpan={this.state.pagesSpan} todosToDisplay={this.state.todosToDisplay}/>
           {this.state.currentAdmin ? <ChangeToDo /> : <AddTodo />}
       </div>

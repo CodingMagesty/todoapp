@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import './Table.css';
 
 class Table extends Component {
+
+  handleClick = (page) => {
+    console.log(page)
+  }
+
   render() {
     const pages = this.props.pagesSpan.map((item) =>(
-            <li key={item.name}>{item.name}</li>
+            <input type='submit' value={item} key={item} onClick={() => this.handleClick(item)} />
         ));
 
     return (
@@ -37,7 +42,7 @@ class Table extends Component {
             </tr>
             </tbody>
         </table>
-        <ul>{pages}</ul>
+        <div className='pages'>{pages}</div>
       </div>
     );
   }
