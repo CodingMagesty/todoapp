@@ -13,7 +13,7 @@ class App extends Component {
       todosToDisplay: 'default',
       amountOfPages: 1,
       currentFilter: 'id',
-      pagesSpan: '1'
+      pagesSpan: []
     }
   }
 
@@ -21,13 +21,11 @@ class App extends Component {
   calculatePages = (amountOfPages) => {
     this.setState({amountOfPages: Math.ceil(amountOfPages / 3)});
     //create spans with pages
-    let list = '';
+    let list = [];
     let counter = this.state.amountOfPages;
     let i = 1;
     while(i <= counter) {
-      list += i;
-      list += ' ';
-      i += 1;
+      list.push(i);
     }
 
     this.setState({pagesSpan: list});
