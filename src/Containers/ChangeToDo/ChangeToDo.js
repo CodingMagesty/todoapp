@@ -14,23 +14,30 @@ class ChangeToDo extends Component {
     let status = e.target.status.value;
 
     //Forming signature
-    let arr = [text, status].sort();
-    if (arr[0] === text) {
-      arr = ['text' + text, 'status' + status];
-    } else {
-      arr = ['status' + status, 'text' + text];
-    }
-    let signature = encodeURIComponent(arr.join('') + 'tokenbeejee');
-    console.log(signature);
-    let form = new FormData();
-    form.append('token', 'beejee');
-    // form.append('signature', signature);
-    (text) && form.append('text', status);
-    (status) && form.append('status', status);
+    let arr = [];
+    (text) && arr.push(text);
+    (status) && arr.push(status);
+    arr.sort();
+    let encodedArr = [];
 
+    arr.forEach(item => {
+      encodedArr.push(encodeURIComponent(item));
+    })
+    let signature = md5(encodedArr[0] === text ? encodeURIComponent('text') + '=' + encodedArr[0] +'&' +
+                                      encodeURIComponent('status')+ '=' + encodedArr[1] + '&' +
+                                      encodeURIComponent('token') + '=' + encodeURIComponent('beejee')
+                                      : encodeURIComponent('status') + '=' + encodedArr[0] +'&' +
+                                      encodeURIComponent('text')+ '=' + encodedArr[1] + '&' +
+                                      encodeURIComponent('token') + '=' + encodeURIComponent('beejee'));
+
+    let form = new FormData();
+    (text) && form.append('text', text);
+    (status) && form.append('status', status);
+    form.append('signature', signature);
+    form.append('token', 'beejee');
 
      //Fetching
-     fetch(`https://uxcandy.com/~shapoval/test-task-backend/edit?id=${id}&developer=Name`,
+     fetch(`https://uxcandy.com/~shapoval/test-task-backend/edit/${id}/?developer=Gleb`,
           {
             method: 'POST',
             crossDomain: true,
@@ -45,8 +52,8 @@ class ChangeToDo extends Component {
       <div>
         <form onSubmit={this.handleChangeTodo}>
           <input type='number' name='id' placeholder='id' required/>
-          <input type='text' name='text' placeholder='text'/>
-          <input type='number' name='status' placeholder='status 10 or 0'/>
+          <input type='text' name='text' placeholder='text' required/>
+          <input type='number' name='status' placeholder='status 10 or 0' required/>
           <input type='submit' value='Change ToDo'/>
         </form>
       </div>

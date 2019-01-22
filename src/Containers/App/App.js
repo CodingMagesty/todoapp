@@ -55,19 +55,17 @@ class App extends Component {
         currentAdmin: true
       })
     }
-
-    console.log(this.state)
   }
 
   onSignout = () => {
     this.setState({
-      currentAdmin: '',
+      currentAdmin: false,
     })
-    console.log(this.state)
   }
 
   //Built-in functions
   componentDidMount() {
+    console.log(this.state);
     this.fetchTasksData();
   }
 
@@ -85,8 +83,7 @@ class App extends Component {
             currentAdmin={this.state.currentAdmin}
           />
           <Table pagesSpan={this.state.pagesSpan} todosToDisplay={this.state.todosToDisplay}/>
-          <AddTodo />
-          <ChangeToDo />
+          {this.state.currentAdmin ? <ChangeToDo /> : <AddTodo />}
       </div>
     )
   }

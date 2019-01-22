@@ -10,7 +10,7 @@ class AddTodo extends Component {
     let email = e.target.email.value;
     let name = e.target.name.value;
     let text = e.target.text.value;
-
+    
     let form = new FormData();
     form.append('username', name);
     form.append('email', email);
