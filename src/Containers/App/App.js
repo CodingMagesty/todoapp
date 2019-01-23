@@ -13,7 +13,8 @@ class App extends Component {
       todosToDisplay: 'default',
       amountOfPages: 1,
       currentFilter: 'id',
-      pagesSpan: []
+      pagesSpan: [],
+      currentPage: 1
     }
   }
 
@@ -26,19 +27,31 @@ class App extends Component {
     let i = 1;
     while(i <= counter) {
       list.push(i);
-      i +=1;
+      i += 1;
     }
 
     this.setState({pagesSpan: list});
   }
 
+  // Is called when any page button is clicked and causes page to rerender
+  // with new currentPage state
   changePage = (page) => {
-    this.setState({page: page});
+    this.setState({currentPage: page}, function () {
+      this.fetchTasksData();
+    });
   }
 
-  //Default todos fetch and changing the default state
+  // Is called when any page filter is clicked and causes page to rerender
+  // with new currentFilter state
+  changeFilter = (filter) => {
+    this.setState({currentFilter: filter}, function () {
+      this.fetchTasksData();
+    });
+  }
+
+  //Fetch data about todos
   fetchTasksData = () => {
-    fetch('https://uxcandy.com/~shapoval/test-task-backend/?developer=Gleb')
+    fetch(`https://uxcandy.com/~shapoval/test-task-backend/?developer=Gleb&page=${this.state.currentPage}&sort_field=${this.state.currentFilter}`)
     .then(result => result.json())
     .then(data => {
       this.setState({todosToDisplay: data.message.tasks});
@@ -64,24 +77,24 @@ class App extends Component {
 
   //Built-in functions
   componentDidMount() {
-    console.log(this.state);
+    //Fetch data for the first time
     this.fetchTasksData();
   }
 
-  componentDidUpdate() {
-    console.log(this.state)
-  }
-
   render() {
-
     return (
       <div>
-      <Header
-        onSignin={this.onSignIn.bind(this)}
-        onSignout={this.onSignout.bind(this)}
-        currentAdmin={this.state.currentAdmin}
-      />
-          <Table pagesSpan={this.state.pagesSpan} todosToDisplay={this.state.todosToDisplay}/>
+          <Header
+            onSignin={this.onSignIn.bind(this)}
+            onSignout={this.onSignout.bind(this)}
+            currentAdmin={this.state.currentAdmin}
+          />
+          <Table
+            pagesSpan={this.state.pagesSpan}
+            todosToDisplay={this.state.todosToDisplay}
+            changePage={this.changePage.bind(this)}
+            changeFilter={this.changeFilter.bind(this)}
+          />
           {this.state.currentAdmin ? <ChangeToDo /> : <AddTodo />}
       </div>
     )
