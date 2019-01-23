@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import './Header.css';
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSignin = this.handleSignin.bind(this);
+    this.handleSignout = this.handleSignout.bind(this);
+  }
+
   handleSignin(e) {
     e.preventDefault();
     let login = this.refs.login.value;
@@ -19,10 +25,10 @@ class Header extends Component {
       return (
         <div className='header'>
           <a href='google.com' className='logo'>ToDoApp</a>
-          <form className='login' onSubmit={this.handleSignin.bind(this)}>
+          <form className='login' onSubmit={this.handleSignin}>
             <input type='text' placeholder='login' ref='login'/>
             <input type='password' placeholder='password' ref='password'/>
-            <input type='submit' value='Log in'/>
+            <button type="submit">Log in</button>
           </form>
         </div>
       );
@@ -30,8 +36,8 @@ class Header extends Component {
       return (
         <div className='header'>
           <a href='google.com' className='logo'>ToDoApp</a>
-          <form className='login' onSubmit={this.handleSignout.bind(this)}>
-            <input type='submit' value='Log out'/>
+          <form className='login' onSubmit={this.handleSignout}>
+            <button type="submit">Log out</button>
           </form>
         </div>
       );
