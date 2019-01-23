@@ -27,10 +27,10 @@ class Table extends Component {
                 <th><input type='submit' value='STATUS' onClick={() => this.handleFilter('status')} /></th>
               </tr>
               <tr>
-                <td>{this.props.todosToDisplay[0]['username']}</td>
-                <td>{this.props.todosToDisplay[0]['email']}</td>
-                <td>{this.props.todosToDisplay[0]['text']}</td>
-                <td>{this.props.todosToDisplay[0]['status'] === 10 ? 'Completed' : 'Not Completed'}</td>
+                <td>{this.props.todosToDisplay[0] ? this.props.todosToDisplay[0]['username'] : ' '}</td>
+                <td>{this.props.todosToDisplay[0] ? this.props.todosToDisplay[0]['email'] : ' '}</td>
+                <td>{this.props.todosToDisplay[0] ? this.props.todosToDisplay[0]['text'] : ' '}</td>
+                <td>{this.props.todosToDisplay[0] ? this.props.todosToDisplay[0]['status'] === 10 ? 'Completed' : 'Not Completed' : ' '}</td>
               </tr>
               <tr>
                 <td>{this.props.todosToDisplay[1] ? this.props.todosToDisplay[1]['username'] : ' '}</td>
