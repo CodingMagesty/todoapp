@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './Table.css';
 
 class Table extends Component {
-
   handleFilter = (filter) => {
     this.props.changeFilter(filter);
   }

@@ -1,19 +1,9 @@
 export default function sign(state = false, action) {
   switch (action.type) {
     case 'SIGN_IN':
-      return [
-        ...state,
-        {
-          currentAdmin: true
-        }
-      ];
+      return true;
       case 'SIGN_OUT':
-        return [
-          ...state,
-          {
-            currentAdmin: false
-          }
-        ];
+        return false
     default:
       return state;
   }

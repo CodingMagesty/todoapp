@@ -23,6 +23,7 @@ export function calculatePages(state = [], action) {
 
 export function changeFilter(state='id', action) {
   if (action.type === 'CHANGE_FILTER') {
+    console.log('Filter', action.filter)
     return action.filter;
   }
 

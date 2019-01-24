@@ -12,7 +12,9 @@ class Header extends Component {
     e.preventDefault();
     let login = this.refs.login.value;
     let password = this.refs.password.value;
-    this.props.onSignin(login, password);
+    if (login === 'admin' && password === '123') {
+      this.props.onSignin();
+    }
   }
 
   handleSignout(e) {
@@ -21,7 +23,7 @@ class Header extends Component {
   }
 
   render() {
-    if (this.props.currentAdmin === false) {
+    if (this.props.sign === false) {
       return (
         <div className='header'>
           <a href='google.com' className='logo'>ToDoApp</a>

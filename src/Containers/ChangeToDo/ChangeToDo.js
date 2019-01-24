@@ -1,10 +1,9 @@
-import React, {Component} from 'react'
-import md5 from 'js-md5';
+import React, {Component} from 'react';
 import './ChangeToDo.css';
 
 class ChangeToDo extends Component {
 
-  handleChangeTodo(e) {
+  handleChangeTodo = (e) => {
     //Don't reload the page
     e.preventDefault();
 
@@ -13,38 +12,7 @@ class ChangeToDo extends Component {
     let text = e.target.text.value;
     let status = e.target.status.value;
 
-    //Forming signature
-    let arr = [];
-    (text) && arr.push(text);
-    (status) && arr.push(status);
-    arr.sort();
-    let encodedArr = [];
-
-    arr.forEach(item => {
-      encodedArr.push(encodeURIComponent(item));
-    })
-    let signature = md5(encodedArr[0] === text ? encodeURIComponent('text') + '=' + encodedArr[0] +'&' +
-                                      encodeURIComponent('status')+ '=' + encodedArr[1] + '&' +
-                                      encodeURIComponent('token') + '=' + encodeURIComponent('beejee')
-                                      : encodeURIComponent('status') + '=' + encodedArr[0] +'&' +
-                                      encodeURIComponent('text')+ '=' + encodedArr[1] + '&' +
-                                      encodeURIComponent('token') + '=' + encodeURIComponent('beejee'));
-
-    let form = new FormData();
-    (text) && form.append('text', text);
-    (status) && form.append('status', status);
-    form.append('signature', signature);
-    form.append('token', 'beejee');
-
-     //Fetching
-     fetch(`https://uxcandy.com/~shapoval/test-task-backend/edit/${id}/?developer=Gleb`,
-          {
-            method: 'POST',
-            crossDomain: true,
-            body: form
-          })
-      .then(result => result.json())
-      .then(json => console.log(json))
+    this.props.changeToDo(id, text, status);
   }
 
   render() {

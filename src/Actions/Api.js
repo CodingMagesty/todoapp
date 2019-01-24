@@ -35,14 +35,15 @@ export const calculatePages = (pages) => {
 }
 
 export const changeFilter = (filter) => {
+  console.log('CHANGE IS CALLED', filter);
   return {
     type: 'CHANGE_FILTER',
     filter
   }
 }
 
-export const fetchData = (page, filter) => (dispatch) => {
-  fetch(`https://uxcandy.com/~shapoval/test-task-backend/?developer=Gleb&page=${page}&sort_field=${filter}`)
+export const fetchData = () => (dispatch, getState) => {
+fetch(`https://uxcandy.com/~shapoval/test-task-backend/?developer=Gleb&page=${getState().changePage}&sort_field=${getState().changeFilter}`)
   .then(result => result.json())
   .then(data => {
       dispatch(displayToDos(data.message.tasks));

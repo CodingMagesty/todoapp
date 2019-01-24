@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './AddToDo.css';
 
 class AddTodo extends Component {
-  handleAddTodo(e) {
+  handleAddTodo = (e) => {
     //Don't reload the page
     e.preventDefault();
 
@@ -11,23 +11,11 @@ class AddTodo extends Component {
     let name = e.target.name.value;
     let text = e.target.text.value;
 
-    let form = new FormData();
-    form.append('username', name);
-    form.append('email', email);
-    form.append('text', text);
-
-    //Fetching
-    fetch('https://uxcandy.com/~shapoval/test-task-backend/create?developer=Gleb',
-          {
-            method: 'POST',
-            crossDomain: true,
-            body: form
-          })
-    .then(result => result.json())
-    .then(json => console.log(json))
+    this.props.addToDo(email, name, text)
   }
 
   render() {
+    console.log('Props', this.props)
     return (
       <div>
         <form onSubmit={this.handleAddTodo}>
